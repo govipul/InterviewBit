@@ -1,47 +1,37 @@
 package com.iamonlygo.google.practice;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Solution_OneToNumber {
 
-  public ArrayList<Integer> plusOne(ArrayList<Integer> a) {
-
-    Collections.reverse(a);
+  public ArrayList<Integer> plusOne(final ArrayList<Integer> a) {
 
     int carry = 1;
-
     ArrayList<Integer> result = new ArrayList<>();
-    for (int i = 0; i < a.size(); i++) {
+    for (int i = a.size() - 1; i >= 0; i--) {
       int digit = a.get(i) + carry;
-      result.add(i, digit % 10);
+      result.add(digit % 10);
       carry = digit / 10;
     }
-    if (carry != 0) {
-      result.add(1);
+    while (carry != 0) {
+      result.add(carry % 10);
+      carry /= 10;
     }
+    return removeTraillingZero(result);
+  }
 
-    Collections.reverse(result);
-
-    int i = 0;
-    for (; i < result.size(); i++) {
-      if (result.get(i) != 0) {
-        break;
+  private ArrayList<Integer> removeTraillingZero(final ArrayList<Integer> result) {
+    final ArrayList<Integer> data = new ArrayList<>();
+    boolean flag = true;
+    for (int index = result.size() - 1; index >= 0; index--) {
+      if (flag && result.get(index) == 0) {
+        continue;
+      } else {
+        flag = false;
+        data.add(result.get(index));
       }
     }
-
-    List<Integer> data = null;
-    if (i > 0) {
-      data = result.subList(i, result.size());
-    } else {
-      data = result;
-    }
-
-
-    result = new ArrayList<>(data);
-    return result;
-
+    return data;
   }
 
 }
