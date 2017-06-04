@@ -1,2 +1,4 @@
-/com/
-*.gradle
+.gradle/
+bin/
+.settings/
+*.class
